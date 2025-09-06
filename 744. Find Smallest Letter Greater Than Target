@@ -17,12 +17,18 @@ class Solution {
 optimal (Using binary search):
 class Solution {
     public char nextGreatestLetter(char[] letters, char target) {
-        for (char c : letters) {
-            if (c > target) {
-                return c;
+        int n=letters.length;
+        int low=0;
+        int high=n-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(letters[mid] > target){              
+                high=mid-1;
+            }else{    //here we had covered equalto and less than both value low will return the ans you can dry run it we use modulus function because 
+                       because for the largest element in the arr less than target than return first elemt 
+                low=mid-1;
             }
         }
-        // if no character greater, wrap around
-        return letters[0];
+        return letters[low%n]; 
     }
 }
