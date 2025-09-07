@@ -1,0 +1,31 @@
+Problem Statement:
+There is an integer array nums sorted in ascending order (with distinct values).
+Prior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].
+Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.
+You must write an algorithm with O(log n) runtime complexity.
+Solution:
+class Solution {
+    public int search(int[] nums, int target) {
+        int n=nums.length;
+        int low=0;
+        int high=n-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(nums[mid]==target) return mid;
+            if(nums[low]<=nums[mid]){//left half is sorted
+                if(nums[low]<=target &&nums[mid]>target){//checking it the ans present in the sorted part only
+                    high=mid-1;
+                }else{
+                    low=mid+1;
+                }
+            }else{//mid is not at the coreect position of sorted part mean left part when is not sorted
+                if(nums[mid]<=target && nums[high]>=target){//checking if the ans present in the right side of the mid
+                    low=mid+1;
+                }else{//if not then we try to check in the left side it may we present
+                    high=mid-1;
+                }
+                
+            }
+        }return -1;       //if target is not present in the arr the return -1
+    }
+}
